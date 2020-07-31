@@ -16,7 +16,7 @@
         >{{ team2score }}</span
       >
     </div>
-    <div>{{ matchName | getMatchNameFromNumber }}</div>
+    <span class="match-number">{{ matchName | getMatchNameFromNumber }}</span>
   </div>
 </template>
 
@@ -55,6 +55,7 @@ export default {
 .match-container {
   border: 1px solid rgba(0, 0, 0, 0.2);
   width: 250px;
+  position: relative;
 }
 .team-container {
   padding: 0 0 0 0.5rem;
@@ -74,5 +75,20 @@ export default {
   padding: 0.2rem 0;
   width: 100%;
   text-align: center;
+}
+.match-number {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  font-size: 0.8rem;
+  background-color: rgb(255, 255, 255);
+  padding: 0.1rem;
+  border-radius: 50%;
 }
 </style>
