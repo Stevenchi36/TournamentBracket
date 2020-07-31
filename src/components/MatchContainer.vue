@@ -16,6 +16,7 @@
         >{{ team2score }}</span
       >
     </div>
+    <div>{{ matchName | getMatchNameFromNumber }}</div>
   </div>
 </template>
 
@@ -31,7 +32,21 @@ export default {
       type: String,
       default: 'orange',
     },
-    matchName: String,
+    matchName: Number,
+  },
+  filters: {
+    getMatchNameFromNumber(number) {
+      const nameLength = number / 26;
+      let code;
+      if (nameLength >= 1) {
+        console.log('NameLength + 65 - 1 =', String.fromCharCode(nameLength + 65 - 1));
+        code = String.fromCharCode(nameLength + 65 - 1);
+        code += String.fromCharCode((number % 26) + 65);
+      } else {
+        code = String.fromCharCode(number + 65);
+      }
+      return code;
+    },
   },
 };
 </script>

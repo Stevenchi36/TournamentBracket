@@ -3,7 +3,7 @@ export const tournamentLadder = {
   teamCount: 4,
   matches: [
     {
-      name: 'A',
+      number: 0,
       isCompleted: true,
       team1: {
         name: 'Team Uno',
@@ -15,7 +15,7 @@ export const tournamentLadder = {
       },
     },
     {
-      name: 'B',
+      number: 1,
       isCompleted: false,
       team1: {
         name: 'Team Tres',

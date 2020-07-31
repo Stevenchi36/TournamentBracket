@@ -9,10 +9,10 @@
         :team1score="match.team1.score"
         :team2score="match.team2.score"
         winColor="rgb(255, 138, 29)"
-        :key="match.name"
+        :matchName="match.number"
+        :key="match.number"
       />
     </template>
-    <span>{{ String.fromCharCode(69) }}</span>
   </div>
 </template>
 
