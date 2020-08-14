@@ -11,7 +11,7 @@
           winColor="rgb(255, 138, 29)"
           :matchName="match.number"
           :key="match.number"
-          :spacing-top="index !== 0 ? getSpacing() : 0"
+          :spacing-top="index !== 0 ? getSpacing() : '0'"
         />
       </template>
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="match-container" :style="{marginTop: spacingTop}">
+  <div class="match-container" :style="{marginTop: spacingTop}" ref="matchContainer" @click="printSize()">
     <div class="team-container first-team">
       <span class="team-name">{{ team1 }}</span>
       <span
@@ -47,6 +47,11 @@ export default {
         code = String.fromCharCode(number + 65);
       }
       return code;
+    },
+  },
+  methods: {
+    printSize() {
+      console.log(this.$refs.matchContainer.clientHeight);
     },
   },
 };
