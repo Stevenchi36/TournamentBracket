@@ -1,5 +1,5 @@
 <template>
-  <div class="match-container">
+  <div class="match-container" :style="{marginTop: spacingTop}">
     <div class="team-container first-team">
       <span class="team-name">{{ team1 }}</span>
       <span
@@ -33,6 +33,7 @@ export default {
       default: 'orange',
     },
     matchName: Number,
+    spacingTop: String,
   },
   filters: {
     getMatchNameFromNumber(number) {
