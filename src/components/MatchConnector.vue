@@ -1,6 +1,13 @@
 <template>
   <div>
-    {{getDirection()}}
+    <div class="spacer"></div>
+    <div class="connector">
+      <div class="left-connector"></div>
+      <div class="right-connector">
+        <div></div>
+      </div>
+    </div>
+    <div class="spacer"></div>
   </div>
 </template>
 
@@ -12,13 +19,38 @@ export default {
       required: true,
     },
   },
-  methods: {
-    getDirection() {
-      if (this.index === 0 || this.index % 2 === 0) {
-        return 'upToDown';
-      }
-      return 'downToUp';
-    },
-  },
 };
 </script>
+
+<style lang="scss" scoped>
+  .connector {
+    display: flex;
+    align-items: stretch;
+  }
+
+  .spacer {
+    height: 25px;
+    width: 25px;
+  }
+
+  .left-connector, .right-connector {
+    width: 25px;
+    height: 70px;
+  }
+
+  .left-connector {
+    border: 1px solid black;
+    border-left: 0px;
+  }
+
+  .right-connector {
+    display: flex;
+    align-items: center;
+
+    div {
+      height: 1px;
+      width: 100%;
+      background-color: black;
+    }
+  }
+</style>

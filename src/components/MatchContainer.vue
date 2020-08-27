@@ -1,19 +1,22 @@
 <template>
-  <div class="match-container" :style="{marginTop: spacingTop}" ref="matchContainer" @click="printSize()">
+  <div
+    class="match-container"
+    :style="{marginTop: spacingTop}"
+  >
     <div class="team-container first-team">
-      <span class="team-name">{{ team1 }}</span>
+      <span class="team-name">{{ matchInfo.team1.name }}</span>
       <span
         class="team-score"
-        :style="isMatchCompleted && team1score > team2score ? `background-color:${winColor};` : ''"
-        >{{ team1score }}</span
+        :style="winningTeam === 1 ? `background-color:${winColor};` : ''"
+        >{{ matchInfo.team1.score }}</span
       >
     </div>
     <div class="team-container">
-      <span class="team-name">{{ team2 }}</span>
+      <span class="team-name">{{ matchInfo.team2.name }}</span>
       <span
         class="team-score"
-        :style="isMatchCompleted && team2score > team1score ? `background-color:${winColor};` : ''"
-        >{{ team2score }}</span
+        :style="winningTeam === 2 > matchInfo.team1.score ? `background-color:${winColor};` : ''"
+        >{{ matchInfo.team2.score }}</span
       >
     </div>
     <span class="match-number">{{ matchName | getMatchNameFromNumber }}</span>
@@ -23,35 +26,47 @@
 <script>
 export default {
   props: {
-    team1: String,
-    team2: String,
-    team1score: Number,
-    team2score: Number,
-    isMatchCompleted: Boolean,
     winColor: {
       type: String,
       default: 'orange',
     },
     matchName: Number,
     spacingTop: String,
+    matchInfo: {
+      type: Object,
+      default() {
+        return {
+          team1: 'Waiting',
+          team2: 'Waiting',
+          team1score: 0,
+          team2score: 0,
+          isCompleted: false,
+          isInProgress: false,
+        };
+      },
+    },
+  },
+  computed: {
+    winningTeam() {
+      if (this.matchInfo.isCompleted) {
+        return this.matchInfo.team1.score > this.matchInfo.team2.score
+          ? 1
+          : 2;
+      }
+      return 0;
+    },
   },
   filters: {
     getMatchNameFromNumber(number) {
       const nameLength = number / 26;
       let code;
       if (nameLength >= 1) {
-        console.log('NameLength + 65 - 1 =', String.fromCharCode(nameLength + 65 - 1));
         code = String.fromCharCode(nameLength + 65 - 1);
         code += String.fromCharCode((number % 26) + 65);
       } else {
         code = String.fromCharCode(number + 65);
       }
       return code;
-    },
-  },
-  methods: {
-    printSize() {
-      console.log(this.$refs.matchContainer.clientHeight);
     },
   },
 };
@@ -62,11 +77,17 @@ export default {
   border: 1px solid rgba(0, 0, 0, 0.2);
   width: 250px;
   position: relative;
+  height: 50px;
+  box-sizing: border-box;
+  font-size: 0.8rem;
 }
 .team-container {
-  padding: 0 0 0 0.5rem;
+  padding: 0 0 0 1rem;
   background-color: rgb(240, 240, 240);
   display: flex;
+  height: 50%;
+  box-sizing: border-box;
+  align-items: center;;
 
   &.first-team {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);

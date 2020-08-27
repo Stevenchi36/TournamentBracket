@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <tournament-ladder
-      :ladderSize="tournamentLadder.ladderSize"
+      :teamCount="tournamentLadder.teamCount"
       :matches="tournamentLadder.matches"
     />
   </div>
