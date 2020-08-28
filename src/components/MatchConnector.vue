@@ -1,13 +1,11 @@
 <template>
   <div>
-    <div class="spacer"></div>
     <div class="connector">
       <div class="left-connector"></div>
       <div class="right-connector">
         <div></div>
       </div>
     </div>
-    <div class="spacer"></div>
   </div>
 </template>
 
@@ -26,11 +24,8 @@ export default {
   .connector {
     display: flex;
     align-items: stretch;
-  }
-
-  .spacer {
-    height: 25px;
-    width: 25px;
+    margin-top: 25px;
+    margin-bottom: 25px;
   }
 
   .left-connector, .right-connector {
