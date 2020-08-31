@@ -1,6 +1,6 @@
 <template>
   <div class="match-column" :style="paddingNeeded">
-    <template v-for="( match, index ) in matches">
+    <template v-for="(match, index) in matches">
       <match-container
         win-color="rgb(255, 138, 29)"
         :match-name="match.number"
