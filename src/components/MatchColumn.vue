@@ -1,11 +1,11 @@
 <template>
-  <div class="match-column" :style="paddingNeeded">
-    <template v-for="(match, index) in matches">
+  <div class="match-column" :class="roundOf === 1 ? 'last-round' : ''" :style="paddingNeeded">
+    <template v-for="(match, index) in roundOf">
       <match-container
         win-color="rgb(255, 138, 29)"
-        :match-name="match.number"
-        :match-info="match"
-        :key="match.number"
+        :match-name="getMatchInfo(index, 'number')"
+        :match-info="getMatchInfo(index)"
+        :key="getMatchInfo(index, 'number')"
         :spacing-top="index !== 0 ? getSpacing() : '0'"
       />
     </template>
@@ -24,10 +24,39 @@ export default {
   props: {
     matches: Array,
     row: Number,
+    roundOf: Number,
   },
   methods: {
     getSpacing() {
       return `${spacing}px`;
+    },
+    getMatchInfo(matchIndex, type = 'all') {
+      console.log(matchIndex, this.matches.length);
+      if (matchIndex < this.matches.length && type === 'all') {
+        return this.matches[matchIndex];
+      }
+      if (matchIndex >= this.matches.length && type === 'all') {
+        return {
+          team1: {
+            name: 'Waiting',
+            score: '-',
+          },
+          team2: {
+            name: 'Waiting',
+            score: '-',
+          },
+          isCompleted: false,
+          isInProgress: false,
+        };
+      }
+      if (matchIndex < this.matches.length && type === 'number') {
+        return this.matches[matchIndex].number;
+      }
+      if (matchIndex >= this.matches.length && type === 'number') {
+        return 0;
+      }
+
+      return matchIndex;
     },
   },
   computed: {
@@ -38,8 +67,21 @@ export default {
 
       return {
         paddingTop: `${padding}px`,
+        paddingBottom: `${padding}px`,
       };
     },
   },
 };
 </script>
+
+<style lang="scss">
+.match-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &.last-round {
+    justify-content: center;
+  }
+}
+</style>

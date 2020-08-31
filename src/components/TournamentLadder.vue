@@ -1,12 +1,12 @@
 <template>
   <div class="ladder-container">
-    <div class="connector-column">
-      <template v-for="( match, index ) in matches[0]">
-        <match-connector v-if="index % 2 === 0" :index="index" :key="index" />
-      </template>
-    </div>
-    <template v-for="( round, index ) in matches">
-      <match-column :row="index" :matches="round" :key="'matchCol' + index"></match-column>
+    <template v-for="( round, index ) in totalRounds">
+      <match-column
+        :row="index"
+        :matches="getMatchesArray(index)"
+        :roundOf="roundCountArray[index]"
+        :key="'matchCol' + index">
+      </match-column>
       <connector-column
         :row="index"
         :roundOf="roundCountArray[index]"
@@ -28,7 +28,6 @@ export default {
     ConnectorColumn,
   },
   props: {
-    // Team Count
     teamCount: {
       type: Number,
       required: true,
@@ -38,6 +37,12 @@ export default {
   methods: {
     getSpacing() {
       return `${spacing}px`;
+    },
+    getMatchesArray(index) {
+      if (index < this.matches.length) {
+        return this.matches[index];
+      }
+      return [];
     },
   },
   computed: {
@@ -52,6 +57,9 @@ export default {
       }
 
       return matchCount.reverse();
+    },
+    totalRounds() {
+      return this.roundCountArray.length;
     },
   },
 };
