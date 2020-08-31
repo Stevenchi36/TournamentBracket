@@ -1,20 +1,23 @@
 <template>
-  <div class="ladder-container">
-    <template v-for="( round, index ) in totalRounds">
-      <div class="combo-container" :key="'comboColumn' + index" :style="style(index)">
-        <match-column
-          :row="index"
-          :matches="getMatchesArray(index)"
-          :roundOf="roundCountArray[index]"
-          :margin="columnMargin(index)">
-        </match-column>
-        <connector-column
-          :row="index"
-          :roundOf="roundCountArray[index]"
-          :margin="columnMargin(index)"
-        ></connector-column>
-      </div>
-    </template>
+  <div class="ladder-container" :style="`height: ${height}`">
+    <div class="column-container" ref="mainColumn">
+      <template v-for="( round, index ) in totalRounds">
+        <div class="combo-container" :key="'comboColumn' + index" :style="style(index)">
+          <match-column
+            :row="index"
+            :matches="getMatchesArray(index)"
+            :roundOf="roundCountArray[index]"
+            :margin="columnMargin(index)">
+          </match-column>
+          <connector-column
+            :row="index"
+            :roundOf="roundCountArray[index]"
+            :margin="columnMargin(index)"
+          ></connector-column>
+        </div>
+      </template>
+
+    </div>
   </div>
 </template>
 
@@ -35,6 +38,10 @@ export default {
       required: true,
     },
     matches: Array,
+    height: {
+      type: String,
+      default: '500px',
+    },
   },
   methods: {
     getSpacing() {
@@ -64,7 +71,7 @@ export default {
       const matchCount = [];
 
       for (let i = 0; i < possibleValues.length; i++) {
-        if (32 / 2 >= possibleValues[i]) {
+        if (this.teamCount / 2 >= possibleValues[i]) {
           matchCount.push(possibleValues[i]);
         }
       }
@@ -80,10 +87,24 @@ export default {
 
 <style lang="scss">
   .ladder-container {
+    position: relative;
+    width: 100%;
+    max-height: 100vh;
+    border: 1px solid black;
+    overflow: auto;
+  }
+  .column-container {
+    position: absolute;
     display: flex;
+    padding: 10px;
+    flex-grow: 0;
+    flex-shrink: 0;
   }
   .combo-container {
     display: flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+    box-sizing: border-box;
 
     * {
       box-sizing: border-box;

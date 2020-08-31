@@ -1,18 +1,13 @@
 <template>
-  <div
-    class="match-container"
-    :style="{marginTop: spacingTop}"
-  >
+  <div class="match-container" :style="{ marginTop: spacingTop }">
     <div class="team-container first-team">
       <span class="team-name">{{ matchInfo.team1.name }}</span>
-      <span
-        class="team-score"
-        :style="winningTeam === 1 ? `background-color:${winColor};` : ''"
-        >{{ matchInfo.team1.score }}</span
-      >
+      <span class="team-score" :style="winningTeam === 1 ? `background-color:${winColor};` : ''">{{
+        matchInfo.team1.score
+      }}</span>
     </div>
     <div class="team-container">
-      <span class="team-name">{{ matchInfo.team2.name }}</span>
+      <span class="team-name">{{ matchInfo.team2.name || `Waiting` }}</span>
       <span
         class="team-score"
         :style="winningTeam === 2 > matchInfo.team1.score ? `background-color:${winColor};` : ''"
@@ -34,24 +29,13 @@ export default {
     spacingTop: String,
     matchInfo: {
       type: Object,
-      default() {
-        return {
-          team1: 'Waiting',
-          team2: 'Waiting',
-          team1score: 0,
-          team2score: 0,
-          isCompleted: false,
-          isInProgress: false,
-        };
-      },
+      required: true,
     },
   },
   computed: {
     winningTeam() {
       if (this.matchInfo.isCompleted) {
-        return this.matchInfo.team1.score > this.matchInfo.team2.score
-          ? 1
-          : 2;
+        return this.matchInfo.team1.score > this.matchInfo.team2.score ? 1 : 2;
       }
       return 0;
     },
@@ -87,7 +71,7 @@ export default {
   display: flex;
   height: 50%;
   box-sizing: border-box;
-  align-items: center;;
+  align-items: center;
 
   &.first-team {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
