@@ -31,7 +31,6 @@ export default {
       return `${spacing}px`;
     },
     getMatchInfo(matchIndex, type = 'all') {
-      console.log(matchIndex, this.matches.length);
       if (matchIndex < this.matches.length && type === 'all') {
         return this.matches[matchIndex];
       }

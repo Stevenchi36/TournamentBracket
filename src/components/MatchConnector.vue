@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="connector">
-      <div class="left-connector"></div>
-      <div class="right-connector">
+      <div class="left-connector" :style="style"></div>
+      <div class="right-connector" :style="style">
         <div></div>
       </div>
     </div>
@@ -15,6 +15,19 @@ export default {
     index: {
       type: Number,
       required: true,
+    },
+    row: {
+      type: Number,
+      required: true,
+    },
+  },
+  computed: {
+    style() {
+      const height = 70;
+
+      return {
+        height: `${height * (this.row + 1)}px`,
+      };
     },
   },
 };

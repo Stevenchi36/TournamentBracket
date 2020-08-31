@@ -1,7 +1,7 @@
 <template>
-  <div v-if="roundOf !== 1">
+  <div class="connector-column" :class="roundOf === 2 ? 'last-round' : ''" v-if="roundOf !== 1">
     <template v-for="index in roundOf/2">
-      <match-connector :index="index" :key="index" />
+      <match-connector :index="index" :row="row" :key="index" />
     </template>
   </div>
 </template>
@@ -25,3 +25,15 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+  .connector-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &.last-round {
+      justify-content: center;
+    }
+  }
+</style>
