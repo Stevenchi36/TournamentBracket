@@ -1,17 +1,19 @@
 <template>
   <div class="ladder-container">
     <template v-for="( round, index ) in totalRounds">
-      <match-column
-        :row="index"
-        :matches="getMatchesArray(index)"
-        :roundOf="roundCountArray[index]"
-        :key="'matchCol' + index">
-      </match-column>
-      <connector-column
-        :row="index"
-        :roundOf="roundCountArray[index]"
-        :key="'connectCol' + index"
-      ></connector-column>
+      <div class="combo-container" :key="'comboColumn' + index" :style="style(index)">
+        <match-column
+          :row="index"
+          :matches="getMatchesArray(index)"
+          :roundOf="roundCountArray[index]"
+          :margin="columnMargin(index)">
+        </match-column>
+        <connector-column
+          :row="index"
+          :roundOf="roundCountArray[index]"
+          :margin="columnMargin(index)"
+        ></connector-column>
+      </div>
     </template>
   </div>
 </template>
@@ -38,11 +40,22 @@ export default {
     getSpacing() {
       return `${spacing}px`;
     },
+    columnMargin(row) {
+      return 35 * row;
+    },
     getMatchesArray(index) {
       if (index < this.matches.length) {
         return this.matches[index];
       }
       return [];
+    },
+    style(round) {
+      const multiplier = 2 ** round;
+
+      return {
+        paddingTop: `${35 * multiplier - 35}px`,
+        paddingBottom: `${35 * multiplier - 35}px`,
+      };
     },
   },
   computed: {
@@ -51,7 +64,7 @@ export default {
       const matchCount = [];
 
       for (let i = 0; i < possibleValues.length; i++) {
-        if (this.teamCount / 2 >= possibleValues[i]) {
+        if (32 / 2 >= possibleValues[i]) {
           matchCount.push(possibleValues[i]);
         }
       }
@@ -67,6 +80,9 @@ export default {
 
 <style lang="scss">
   .ladder-container {
+    display: flex;
+  }
+  .combo-container {
     display: flex;
 
     * {

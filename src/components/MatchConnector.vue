@@ -24,9 +24,10 @@ export default {
   computed: {
     style() {
       const height = 70;
+      const multiplier = 2 ** this.row;
 
       return {
-        height: `${height * (this.row + 1)}px`,
+        height: `${height * (multiplier)}px`,
       };
     },
   },

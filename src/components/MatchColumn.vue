@@ -1,5 +1,5 @@
 <template>
-  <div class="match-column" :class="roundOf === 1 ? 'last-round' : ''" :style="paddingNeeded">
+  <div class="match-column" :class="roundOf === 1 ? 'last-round' : ''">
     <template v-for="(match, index) in roundOf">
       <match-container
         win-color="rgb(255, 138, 29)"
@@ -25,6 +25,10 @@ export default {
     matches: Array,
     row: Number,
     roundOf: Number,
+    margin: {
+      type: Number,
+      required: true,
+    },
   },
   methods: {
     getSpacing() {
@@ -56,18 +60,6 @@ export default {
       }
 
       return matchIndex;
-    },
-  },
-  computed: {
-    paddingNeeded() {
-      // TODO: Get number in better way
-      let padding = 35;
-      padding = 35 * this.row;
-
-      return {
-        paddingTop: `${padding}px`,
-        paddingBottom: `${padding}px`,
-      };
     },
   },
 };

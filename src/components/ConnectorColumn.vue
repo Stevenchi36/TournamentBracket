@@ -22,6 +22,10 @@ export default {
       type: Number,
       required: true,
     },
+    margin: {
+      type: Number,
+      required: true,
+    },
   },
 };
 </script>
