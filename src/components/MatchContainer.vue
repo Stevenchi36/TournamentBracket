@@ -17,6 +17,7 @@
       class="team-container"
       :class="isTeamHighlighted(matchInfo.team2.name) ? 'highlight' : ''"
       @mouseover="highlightTeam(matchInfo.team2.name)"
+      @mouseout="highlightTeam(null)"
     >
       <span class="team-name">{{
         matchInfo.team2.name || getWaitingForWinnerName(matchName, false)
@@ -97,7 +98,7 @@ export default {
       this.$emit('hovered', teamName);
     },
     isTeamHighlighted(teamName) {
-      if (this.highlightedTeam === teamName) {
+      if (this.highlightedTeam && this.highlightedTeam === teamName) {
         return true;
       }
       return false;
