@@ -9,6 +9,8 @@
         :spacing-top="index !== 0 ? getSpacing() : '0'"
         :row="row"
         :roundArray="roundArray"
+        :highlightedTeam="highlightedTeam"
+        @hovered="updateHovered"
       />
     </template>
   </div>
@@ -33,6 +35,10 @@ export default {
     roundArray: {
       type: Array,
       required: true,
+    },
+    highlightedTeam: {
+      type: String,
+      required: false,
     },
   },
   methods: {
@@ -62,6 +68,9 @@ export default {
         totalSoFar += this.roundArray[i];
       }
       return totalSoFar + index;
+    },
+    updateHovered(name) {
+      this.$emit('teamHovered', name);
     },
   },
 };

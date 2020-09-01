@@ -7,7 +7,9 @@
             :row="index"
             :matches="getMatchesArray(index)"
             :margin="columnMargin(index)"
-            :roundArray="roundCountArray">
+            :roundArray="roundCountArray"
+            :highlightedTeam="highlightedTeam"
+            @teamHovered="updateHighlightedTeam">
           </match-column>
           <connector-column
             :row="index"
@@ -31,6 +33,11 @@ export default {
   components: {
     MatchColumn,
     ConnectorColumn,
+  },
+  data() {
+    return {
+      highlightedTeam: null,
+    };
   },
   props: {
     teamCount: {
@@ -64,6 +71,9 @@ export default {
         paddingBottom: `${35 * multiplier - 35}px`,
       };
     },
+    updateHighlightedTeam(name) {
+      this.highlightedTeam = name;
+    },
   },
   computed: {
     roundCountArray() {
@@ -92,6 +102,11 @@ export default {
     max-height: 100vh;
     border: 1px solid black;
     overflow: auto;
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
   }
   .column-container {
     position: absolute;

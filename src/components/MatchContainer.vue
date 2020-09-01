@@ -1,6 +1,11 @@
 <template>
   <div class="match-container" :style="{ marginTop: spacingTop }">
-    <div class="team-container first-team">
+    <div
+      class="team-container first-team"
+      :class="isTeamHighlighted(matchInfo.team1.name) ? 'highlight' : ''"
+      @mouseover="highlightTeam(matchInfo.team1.name)"
+      @mouseout="highlightTeam(null)"
+    >
       <span class="team-name">{{
         matchInfo.team1.name || getWaitingForWinnerName(matchName, true)
       }}</span>
@@ -8,7 +13,11 @@
         matchInfo.team1.score
       }}</span>
     </div>
-    <div class="team-container">
+    <div
+      class="team-container"
+      :class="isTeamHighlighted(matchInfo.team2.name) ? 'highlight' : ''"
+      @mouseover="highlightTeam(matchInfo.team2.name)"
+    >
       <span class="team-name">{{
         matchInfo.team2.name || getWaitingForWinnerName(matchName, false)
       }}</span>
@@ -40,6 +49,10 @@ export default {
     roundArray: {
       type: Array,
       required: true,
+    },
+    highlightedTeam: {
+      type: String,
+      required: false,
     },
   },
   computed: {
@@ -80,6 +93,15 @@ export default {
       }
       return code;
     },
+    highlightTeam(teamName) {
+      this.$emit('hovered', teamName);
+    },
+    isTeamHighlighted(teamName) {
+      if (this.highlightedTeam === teamName) {
+        return true;
+      }
+      return false;
+    },
   },
 };
 </script>
@@ -103,6 +125,10 @@ export default {
 
   &.first-team {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
+  &.highlight {
+    background-color: yellow;
   }
 }
 .team-name {
