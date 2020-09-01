@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <select v-model="selected" style="margin-bottom: 10px;">
-      <option v-for="option in dataOptions" :value="option.value" :key="option.value">{{
-        option.text
+      <option v-for="(option, index) in tournamentLadder" :value="index" :key="index">{{
+        option.ladderName
       }}</option>
     </select>
     <tournament-ladder
@@ -24,11 +24,7 @@ export default {
   data() {
     return {
       tournamentLadder,
-      dataOptions: [
-        { text: '4 teams - Finished', value: 0 },
-        { text: '8 teams - Unfinished', value: 1 },
-      ],
-      selected: 0,
+      selected: 2,
     };
   },
 };
