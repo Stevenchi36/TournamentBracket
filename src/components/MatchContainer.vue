@@ -1,20 +1,24 @@
 <template>
   <div class="match-container" :style="{ marginTop: spacingTop }">
     <div class="team-container first-team">
-      <span class="team-name">{{ matchInfo.team1.name }}</span>
+      <span class="team-name">{{
+        matchInfo.team1.name || getWaitingForWinnerName(matchName, true)
+      }}</span>
       <span class="team-score" :style="winningTeam === 1 ? `background-color:${winColor};` : ''">{{
         matchInfo.team1.score
       }}</span>
     </div>
     <div class="team-container">
-      <span class="team-name">{{ matchInfo.team2.name || `Waiting` }}</span>
+      <span class="team-name">{{
+        matchInfo.team2.name || getWaitingForWinnerName(matchName, false)
+      }}</span>
       <span
         class="team-score"
         :style="winningTeam === 2 > matchInfo.team1.score ? `background-color:${winColor};` : ''"
         >{{ matchInfo.team2.score }}</span
       >
     </div>
-    <span class="match-number">{{ matchName | getMatchNameFromNumber }}</span>
+    <span class="match-number">{{ getMatchNameFromNumber(matchName) }}</span>
   </div>
 </template>
 
@@ -31,6 +35,14 @@ export default {
       type: Object,
       required: true,
     },
+    row: {
+      type: Number,
+      required: true,
+    },
+    roundArray: {
+      type: Array,
+      required: true,
+    },
   },
   computed: {
     winningTeam() {
@@ -40,7 +52,25 @@ export default {
       return 0;
     },
   },
-  filters: {
+  methods: {
+    getWaitingForWinnerName(number, isTeamOne) {
+      if (this.row === 0) {
+        return '';
+      }
+
+      let sameColumnCount = 0;
+      for (let i = 0; i < this.row; i++) {
+        sameColumnCount += this.roundArray[i];
+      }
+
+      const skipCount = number - sameColumnCount;
+
+      const previousMatch = isTeamOne
+        ? number + skipCount - this.roundArray[this.row - 1]
+        : number + skipCount - this.roundArray[this.row - 1] + 1;
+
+      return `Winner of ${this.getMatchNameFromNumber(previousMatch)}`;
+    },
     getMatchNameFromNumber(number) {
       const nameLength = number / 26;
       let code;

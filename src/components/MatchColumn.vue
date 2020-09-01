@@ -1,12 +1,14 @@
 <template>
-  <div class="match-column" :class="roundOf === 1 ? 'last-round' : ''">
-    <template v-for="(match, index) in roundOf">
+  <div class="match-column" :class="roundArray[row] === 1 ? 'last-round' : ''">
+    <template v-for="(match, index) in roundArray[row]">
       <match-container
         win-color="rgb(255, 138, 29)"
-        :match-name="getMatchInfo(index, 'number')"
+        :match-name="getMatchNumber(index)"
         :match-info="getMatchInfo(index)"
-        :key="getMatchInfo(index, 'number')"
+        :key="'match' + getMatchNumber(index)"
         :spacing-top="index !== 0 ? getSpacing() : '0'"
+        :row="row"
+        :roundArray="roundArray"
       />
     </template>
   </div>
@@ -24,9 +26,12 @@ export default {
   props: {
     matches: Array,
     row: Number,
-    roundOf: Number,
     margin: {
       type: Number,
+      required: true,
+    },
+    roundArray: {
+      type: Array,
       required: true,
     },
   },
@@ -34,32 +39,29 @@ export default {
     getSpacing() {
       return `${spacing}px`;
     },
-    getMatchInfo(matchIndex, type = 'all') {
-      if (matchIndex < this.matches.length && type === 'all') {
+    getMatchInfo(matchIndex) {
+      if (matchIndex < this.matches.length) {
         return this.matches[matchIndex];
       }
-      if (matchIndex >= this.matches.length && type === 'all') {
-        return {
-          team1: {
-            name: 'Waiting',
-            score: '-',
-          },
-          team2: {
-            name: 'Waiting',
-            score: '-',
-          },
-          isCompleted: false,
-          isInProgress: false,
-        };
+      return {
+        team1: {
+          name: '',
+          score: '',
+        },
+        team2: {
+          name: '',
+          score: '',
+        },
+        isCompleted: false,
+        isInProgress: false,
+      };
+    },
+    getMatchNumber(index) {
+      let totalSoFar = 0;
+      for (let i = 0; i < this.row; i++) {
+        totalSoFar += this.roundArray[i];
       }
-      if (matchIndex < this.matches.length && type === 'number') {
-        return this.matches[matchIndex].number;
-      }
-      if (matchIndex >= this.matches.length && type === 'number') {
-        return 0;
-      }
-
-      return matchIndex;
+      return totalSoFar + index;
     },
   },
 };

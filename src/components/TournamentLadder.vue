@@ -6,8 +6,8 @@
           <match-column
             :row="index"
             :matches="getMatchesArray(index)"
-            :roundOf="roundCountArray[index]"
-            :margin="columnMargin(index)">
+            :margin="columnMargin(index)"
+            :roundArray="roundCountArray">
           </match-column>
           <connector-column
             :row="index"
