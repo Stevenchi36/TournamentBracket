@@ -12,11 +12,9 @@
       <span class="team-name">{{
         matchInfo.team2.name || getWaitingForWinnerName(matchName, false)
       }}</span>
-      <span
-        class="team-score"
-        :style="winningTeam === 2 > matchInfo.team1.score ? `background-color:${winColor};` : ''"
-        >{{ matchInfo.team2.score }}</span
-      >
+      <span class="team-score" :style="winningTeam === 2 ? `background-color:${winColor};` : ''">{{
+        matchInfo.team2.score
+      }}</span>
     </div>
     <span class="match-number">{{ getMatchNameFromNumber(matchName) }}</span>
   </div>
@@ -131,5 +129,8 @@ export default {
   background-color: rgb(255, 255, 255);
   padding: 0.1rem;
   border-radius: 50%;
+}
+span {
+  height: 100%;
 }
 </style>
